@@ -1,7 +1,10 @@
 package com.curso.ecommerce.service;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,31 +29,35 @@ public class OrdenServiceImpl implements IOrdenService {
     }
 
     public String generarNumeroOrden() {
-        int numero=0;
-
+        int numero;
+        String numeroConcatenado;
+    
         List<Orden> ordenes = findAll();
-        
-        List<Integer> numeros = new ArrayList<Integer>();
-        
-        ordenes.stream().forEach(o -> numeros.add(Integer.parseInt(o.getNumero())));
-
+    
         if (ordenes.isEmpty()) {
             numero = 1;
-        }else {
-            numero = numeros.stream().max(Integer::compare).get();
-            numero++;
+        } else {
+            List<Integer> numeros = ordenes.stream()
+                                           .map(Orden::getNumero)
+                                           .filter(Objects::nonNull)
+                                           .map(numeroStr -> {
+                                               try {
+                                                   return Integer.parseInt(numeroStr);
+                                               } catch (NumberFormatException e) {
+                                                   return null;
+                                               }
+                                           })
+                                           .filter(Objects::nonNull)
+                                           .collect(Collectors.toList());
+    
+            Optional<Integer> maximo = numeros.stream()
+                                              .max(Comparator.naturalOrder());
+            numero = maximo.orElse(0) + 1;
         }
-
-        StringBuilder numeroConcatenado = new StringBuilder();
-        int numeroLongitud = String.valueOf(numero).length();
-        int totalDigitos = 10;  // Total de dígitos deseado en el número
-
-        for (int i = 0; i < totalDigitos - numeroLongitud; i++) {
-            numeroConcatenado.append("0");
-        }
-        numeroConcatenado.append(numero);
-
-        return numeroConcatenado.toString();
-    }
+    
+        numeroConcatenado = String.format("%09d", numero);
+    
+        return numeroConcatenado;
+    }    
 
 }
