@@ -59,7 +59,7 @@ public class HomeController {
         model.addAttribute("productos", productoService.fiadAll());
 
         // session
-        model.addAttribute("session", session.getAttribute("idusuario"));
+        model.addAttribute("sesion", session.getAttribute("idusuario"));
         
         return "/usuario/home";
     }
