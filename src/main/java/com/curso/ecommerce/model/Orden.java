@@ -1,13 +1,14 @@
 package com.curso.ecommerce.model;
 
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,8 +26,8 @@ public class Orden {
     @ManyToOne
     private Usuario usuario;
 
-    @OneToOne(mappedBy = "orden")
-    private DetalleOrden detalle;
+    @OneToMany(mappedBy = "orden")
+    private List<DetalleOrden> detalles;
 
     public Orden() {
     }
@@ -79,12 +80,12 @@ public class Orden {
         this.total = total;
     }
 
-    public DetalleOrden getDetalle() {
-        return detalle;
+    public List<DetalleOrden> getDetalles() {
+        return detalles;
     }
 
-    public void setDetalle(DetalleOrden detalle) {
-        this.detalle = detalle;
+    public void setDetalles(List<DetalleOrden> detalles) {
+        this.detalles = detalles;
     }
 
     @Override

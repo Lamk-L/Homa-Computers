@@ -122,5 +122,13 @@ public class Usuario {
     public void setProductos(List<Producto> productos) {
         this.productos = productos;
     }
+
+    public List<Orden> getOrdenes() {
+        return ordenes;
+    }
+
+    public void setOrdenes(List<Orden> ordenes) {
+        this.ordenes = ordenes;
+    }
     
 }
