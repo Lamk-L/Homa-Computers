@@ -52,10 +52,10 @@ public class UsuarioController {
     }
 
     @PostMapping("/acceder")
-    public String acceder(Usuario usuario, HttpSession session) {
+    public String acceder(Usuario usuario, HttpSession session, Model model) {
         logger.info("Accesos: {}", usuario);
 
-        Optional<Usuario> user = usuarioService.findByEmail(usuario.getEmail());
+        Optional<Usuario> user = usuarioService.findByEmailAndPassword(usuario.getEmail(), usuario.getPassword());
         // logger.info("Usuario de db: {}", user.get());
 
         if (user.isPresent()) {
@@ -67,9 +67,10 @@ public class UsuarioController {
             }
         }else {
             logger.info("Usuario no existe");
+            model.addAttribute("errorMessage", "Usuario no existe");
+            // No realizamos una redirección, permitimos que el usuario intente de nuevo en la misma página
+            return "usuario/login";
         }
-
-        return "redirect:/";
     }
 
     @GetMapping("/compras")

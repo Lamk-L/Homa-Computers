@@ -26,13 +26,13 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     @Override
-    public Optional<Usuario> findByEmail(String email) {
-        return usuarioRepository.findByEmail(email);
+    public List<Usuario> findAll() {
+       return usuarioRepository.findAll();
     }
 
     @Override
-    public List<Usuario> findAll() {
-       return usuarioRepository.findAll();
+    public Optional<Usuario> findByEmailAndPassword(String email, String password) {
+        return usuarioRepository.findByEmailAndPassword(email, password);
     }
 
 }

@@ -9,5 +9,5 @@ import com.curso.ecommerce.model.Usuario;
 
 @Repository
 public interface IUsuarioRepository extends JpaRepository<Usuario, Integer>{
-    Optional<Usuario> findByEmail(String email);
+    Optional<Usuario> findByEmailAndPassword(String email, String password);
 }

@@ -61,7 +61,13 @@ public class HomeController {
         // session
         model.addAttribute("sesion", session.getAttribute("idusuario"));
         
-        return "/usuario/home";
+        if (session.getAttribute("idusuario") != null) {
+            // Si hay un usuario logeado, redirecciona a la página de inicio de usuario
+            return "usuario/home";
+        } else {
+            // Si no hay un usuario logeado, redirecciona a la página de inicio de sesión
+            return "redirect:/usuario/login";
+        }
     }
 
     @GetMapping("productohome/{id}")
@@ -142,7 +148,7 @@ public class HomeController {
         model.addAttribute("orden", orden);
 
         // session
-        model.addAttribute("session", session.getAttribute("idusuario"));
+        model.addAttribute("sesion", session.getAttribute("idusuario"));
         return "/usuario/carrito";
     }
 
@@ -154,6 +160,8 @@ public class HomeController {
         model.addAttribute("cart", detalles);
         model.addAttribute("orden", orden);
         model.addAttribute("usuario", usuario);
+        // session
+        model.addAttribute("sesion", session.getAttribute("idusuario"));
         return "usuario/resumenorden";
     }
 

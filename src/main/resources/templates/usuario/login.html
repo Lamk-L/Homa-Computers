@@ -44,18 +44,22 @@
   <!-- Page Content -->
   <div class="container">
 
+    <!-- Add this block to show error message -->
+    <div th:if="${errorMessage}" class="alert alert-danger">
+      <p th:text="${errorMessage}"></p>
+    </div>
+
     <div class="card mb-3">
       <div class="row no-gutters">
-        <div class="col-md-4">
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h2>Ingresar</h2>
-
+          <div class="col-md-4">
           </div>
-        </div>
+          <div class="col-md-8">
+              <div class="card-body">
+                  <h2>Ingresar</h2>
+              </div>
+          </div>
       </div>
-    </div>
+  </div>
 
     
     <form  th:action="@{/usuario/acceder}" method="post">
@@ -72,7 +76,7 @@
 
       <div class="form-group">
         <div class="col-sm-2">
-          <button type="submit" class="btn btn-dark"> <span class="glyphicon glyphicon-ok"></span> Ingresar</button>
+          <button type="submit" class="btn btn-dark"> <span class="glyphicon glyphicon-ok"></span>Ingresar</button>
         </div>      
       </div>    
     </form>
